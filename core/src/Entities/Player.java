@@ -47,7 +47,7 @@ public class Player extends Sprite{
     	this.setTexture(playerTexture);
     	this.setSize(64, 64);
     	this.setOriginCenter();
-    	this.setPosition(100, 100);
+    	this.setPosition(500, 500);
 
     	BodyDef bodyDef = new BodyDef();
     	bodyDef.type = BodyType.DynamicBody;
