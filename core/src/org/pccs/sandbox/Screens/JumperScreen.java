@@ -2,6 +2,8 @@ package org.pccs.sandbox.Screens;
 
 import java.util.Iterator;
 
+import org.pccs.sandbox.Utils;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -55,8 +57,8 @@ public class JumperScreen implements Screen {
         camera.setToOrtho(false, width, height);
         camera.position.set(100, 100, 0);
         camera.update();
-
-        world = new World(new Vector2(0, -9.81f), true);
+        
+        world = new World(new Vector2(0, -90.81f), true);
         box2dDebugRenderer = new Box2DDebugRenderer();
         //tile map
         tiledMap = new TmxMapLoader().load("map1.tmx");
@@ -82,6 +84,8 @@ public class JumperScreen implements Screen {
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
         	player.translateandupdate(500, 0);
+        } if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        	player.jump();
         }
        
      
