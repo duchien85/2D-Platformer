@@ -2,6 +2,8 @@ package org.pccs.sandbox.Screens;
 
 import java.util.Iterator;
 
+import org.pccs.sandbox.Utils;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
@@ -55,11 +57,11 @@ public class JumperScreen implements Screen {
         camera.setToOrtho(false, width, height);
         camera.position.set(100, 100, 0);
         camera.update();
-
-        world = new World(new Vector2(0, -9.81f), true);
+        
+        world = new World(new Vector2(0, -90.81f), true);
         box2dDebugRenderer = new Box2DDebugRenderer();
         //tile map
-        tiledMap = new TmxMapLoader().load("mapone.tmx");
+        tiledMap = new TmxMapLoader().load("map1.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
         Box2DMapObjectParser parser = new Box2DMapObjectParser();
         parser.load(world, tiledMap);
@@ -68,27 +70,24 @@ public class JumperScreen implements Screen {
         rayHandler = new RayHandler(world);
         rayHandler.setCombinedMatrix(camera.combined);
         player = new Player(world, rayHandler);
-
+        player.setPosition(500, 500);
     }
 
     @Override
     public void render(float delta) {
     	Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
-        Gdx.gl.glClearColor(1.0f, 0.25f, 0.25f, 0.0f);
+        Gdx.gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         //tiled map render
         if(Gdx.input.isKeyPressed(Input.Keys.A)){
         	player.translateandupdate(-500, 0);
         }
         if(Gdx.input.isKeyPressed(Input.Keys.D)){
         	player.translateandupdate(500, 0);
+        } if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        	player.jump();
         }
-        if(Gdx.input.isKeyPressed(Input.Keys.W)){
-        	player.translateandupdate(0, 500);
-        }
-        if(Gdx.input.isKeyPressed(Input.Keys.S)){
-        	player.translateandupdate(0, -500);
-        }
+       
      
         
         camera.position.set(player.getX()+player.getWidth()/2, player.getY()+player.getHeight()/2, 0);

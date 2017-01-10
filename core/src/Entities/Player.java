@@ -4,6 +4,8 @@ import box2dLight.ConeLight;
 import box2dLight.PointLight;
 import box2dLight.RayHandler;
 
+import org.pccs.sandbox.Utils;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -31,7 +33,7 @@ public class Player extends Sprite{
     	bodyDef.position.set(this.getX()+this.getWidth()/2, this.getY()+this.getHeight()/2);
     	body = world.createBody(bodyDef);
     	CircleShape circle = new CircleShape();
-    	circle.setRadius(this.getWidth()/2);
+    	circle.setRadius(this.getWidth()/2/Utils.SCALE_FACTOR);
     	FixtureDef fixtureDef = new FixtureDef();
     	fixtureDef.shape = circle;
     	fixtureDef.density = 0.5f;
@@ -47,7 +49,7 @@ public class Player extends Sprite{
     	this.setTexture(playerTexture);
     	this.setSize(64, 64);
     	this.setOriginCenter();
-    	this.setPosition(100, 100);
+    	this.setPosition(500, 500);
 
     	BodyDef bodyDef = new BodyDef();
     	bodyDef.type = BodyType.DynamicBody;
@@ -83,6 +85,10 @@ public class Player extends Sprite{
     public void updatepos(){
     	this.setPosition(body.getTransform().getPosition().x-this.getWidth()/2, body.getTransform().getPosition().y-this.getHeight()/2);
     	body.setTransform(body.getTransform().getPosition(), (float) Math.toRadians(this.getRotation()+90));
+    }
+    
+    public void jump() {
+    	body.applyForceToCenter(0, 1000000000, true);
     }
 
     public Texture getTexture(){
